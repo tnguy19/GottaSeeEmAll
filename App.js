@@ -11,6 +11,8 @@ import HomeHeader from './components/HomeHeader/HomeHeader';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useState, useEffect, useCallback } from 'react';
+import { Foundation, Entypo } from '@expo/vector-icons';
+import DiscoverHeader from './components/Discover/DiscoverHeader';
 
 //SplashScreen.preventAutoHideAsync();
 
@@ -18,6 +20,7 @@ const getFonts = () =>
   Font.loadAsync({
     'figtree-regular': require("./assets/fonts/Figtree-Regular.ttf"),
     'figtree-medium': require("./assets/fonts/Figtree-Medium.ttf"),
+    'figtree-bold': require("./assets/fonts/Figtree-Bold.ttf"),
   });
 
 const Stack = createNativeStackNavigator();
@@ -25,13 +28,30 @@ const Tab = createBottomTabNavigator();
 
 function MainAppTab(){
   return (
-    <Tab.Navigator
-      screenOptions={{
-        header: () => <HomeHeader/>
-      }}
-    >
-      <Tab.Screen name='Home' component={Home}/>
-      <Tab.Screen name='Discover' component={Discover} />
+    <Tab.Navigator screenOptions={{
+      tabBarLabelStyle: {
+        color: 'black', 
+        fontFamily: 'figtree-medium',
+        fontSize: 12
+      }
+    }}>
+      <Tab.Screen 
+        name='Home' 
+        component={Home}
+        options={{
+          header:  () => <HomeHeader/>,
+          tabBarIcon: ({ focused, size }) => <Foundation name="home" size={size} color={focused ? 'black' : '#808080'} />,
+          
+        }}
+      />
+      <Tab.Screen 
+        name='Discover' 
+        component={Discover}
+        options = {{
+          header: () => <DiscoverHeader/>,
+          tabBarIcon: ({ focused, size }) => <Entypo name="compass" size={size} color={focused ? 'black' : '#808080'} />,
+        }} 
+      />
     </Tab.Navigator>
   )
 }

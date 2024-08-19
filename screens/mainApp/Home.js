@@ -17,10 +17,6 @@ export default function Home({navigation}){
         });
     }, [currentView]);
 
-    if (currentView === 'Map') {
-        return <></>;
-    }
-
     if (currentView === 'Map'){
         return (
             <></>

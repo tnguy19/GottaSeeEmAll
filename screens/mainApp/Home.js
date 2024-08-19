@@ -21,14 +21,6 @@ export default function Home({navigation}){
         return <></>;
     }
 
-    function toggleView(){
-        if (currentView === 'Overview'){
-            setCurrentView('Map');
-        } else {
-            setCurrentView('Overview');
-        }
-    }
-
     if (currentView === 'Map'){
         return (
             <></>

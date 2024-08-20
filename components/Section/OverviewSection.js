@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import Button from "../SearchBar/Button";
 
 export default function OverviewSection({ title, children }) {
@@ -6,6 +6,9 @@ export default function OverviewSection({ title, children }) {
         <View style={styles.sectionContainer}>
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>{title}</Text>
+                <TouchableOpacity>
+                    <Text style={styles.optionText}>See All</Text>
+                </TouchableOpacity>
             </View>
             {children}
         </View>
@@ -14,7 +17,8 @@ export default function OverviewSection({ title, children }) {
 
 const styles = StyleSheet.create({
     sectionContainer: {
-        marginTop: 20
+        marginTop: 20,
+        marginBottom: 5
     },
     titleContainer: {
         flexDirection: 'row',
@@ -24,5 +28,10 @@ const styles = StyleSheet.create({
         fontFamily: 'figtree-bold',
         fontSize: 20
     },
-
+    optionText: {
+        fontFamily: 'figtree-regular',
+        fontSize: 15,
+        paddingTop: 2,
+        paddingRight: 5
+    }
 });

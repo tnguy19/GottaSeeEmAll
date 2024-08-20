@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { useState, useEffect } from "react";
 import HomeHeader from "../../components/HomeHeader/HomeHeader";
@@ -26,17 +26,28 @@ export default function Home({ navigation }) {
     }
 
     return (
-        <View style={styles.container}>
-            <SearchBar />
-            <OverviewSection title='Suggestions'>
-                <CardCarousel/>
-            </OverviewSection>
-        </View>
+        <ScrollView style={styles.container}>
+            <View style={styles.content}>
+                <SearchBar />
+                <OverviewSection title='Suggestions'>
+                    <CardCarousel />
+                </OverviewSection>
+                <OverviewSection title='Recently Visited'>
+                    <CardCarousel />
+                </OverviewSection>
+                <OverviewSection title='Wishlist'>
+                    <CardCarousel />
+                </OverviewSection>
+            </View>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         padding: 18
+    },
+    content: {
+        paddingBottom: 50
     }
 });

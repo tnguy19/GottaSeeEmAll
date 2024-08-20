@@ -2,6 +2,7 @@ import { View, StyleSheet } from "react-native";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { useState, useEffect } from "react";
 import HomeHeader from "../../components/HomeHeader/HomeHeader";
+import OverviewSection from "../../components/Section/OverviewSection";
 
 export default function Home({navigation}){
     const [currentView, setCurrentView] = useState('Overview');
@@ -26,6 +27,7 @@ export default function Home({navigation}){
     return (
         <View style={styles.container}>
         <SearchBar/>
+        <OverviewSection title='Suggestions'/>
         </View>
     )
 }

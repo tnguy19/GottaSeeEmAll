@@ -2,7 +2,6 @@ import { View, ImageBackground, StyleSheet, Text, Dimensions, TouchableOpacity }
 import { LinearGradient } from "expo-linear-gradient";
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 export default function PlaceCard({ imageUri, title, location }) {
     return (
@@ -34,7 +33,8 @@ const styles = StyleSheet.create({
         height: windowWidth / 3 + 15,
         borderRadius: 10,
         overflow: 'hidden',
-        margin: 5,
+        marginTop: 20,
+        marginRight: 10,
     },
     ImageBackground: {
         flex: 1,

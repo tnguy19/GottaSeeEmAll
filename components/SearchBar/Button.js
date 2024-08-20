@@ -1,10 +1,10 @@
 import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function LocationButton({city}){
+export default function Button({city, name}){
     return (
         <TouchableOpacity style={styles.searchBarContainer}>
-            <MaterialIcons name="my-location" size={17} color="black" />
+            {name && <MaterialIcons name={name} size={17} color="black" />}
             <Text style={styles.text}>{city}</Text>
         </TouchableOpacity>
     )

@@ -1,6 +1,6 @@
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import LocationButton from './LocationButton';
+import Button from './Button';
 
 export default function SearchBar() {
     return (
@@ -10,7 +10,7 @@ export default function SearchBar() {
                     <FontAwesome name="search" size={15} color="black" />
                     <Text style={styles.text}>Search Landmark</Text>
                 </View>
-                <LocationButton city='Boston'/>
+                <Button city='Boston' name='my-location'/>
             </View>
         </TouchableOpacity>
     )

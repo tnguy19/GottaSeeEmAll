@@ -1,18 +1,27 @@
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import Button from './Button';
+import HistoryTab from './HistoryTab';
 
 export default function SearchBar() {
     return (
-        <TouchableOpacity style={styles.searchBarContainer}>
-            <View style={styles.content}>
-                <View style={styles.placeholderContainer}>
-                    <FontAwesome name="search" size={15} color="black" />
-                    <Text style={styles.text}>Search Landmark</Text>
+        <>
+            <TouchableOpacity>
+                <View style={styles.searchBarContainer}>
+                    <View style={styles.content}>
+                        <View style={styles.placeholderContainer}>
+                            <FontAwesome name="search" size={15} color="black" />
+                            <Text style={styles.text}>Search Landmark</Text>
+                        </View>
+                        <Button city='Boston' name='my-location' />
+                    </View>
                 </View>
-                <Button city='Boston' name='my-location'/>
+            </TouchableOpacity>
+            <View style={styles.searchHistory}>
+                <HistoryTab name='Boston Common' city='Boston' />
+                <HistoryTab name='Fenway Park' city='Boston'/>
             </View>
-        </TouchableOpacity>
+        </>
     )
 }
 
@@ -41,5 +50,9 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         fontSize: 18,
         paddingTop: 3
+    },
+    searchHistory: {
+        marginTop: 10,
+        marginLeft: 5,
     }
 });

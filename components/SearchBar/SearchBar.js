@@ -3,7 +3,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import Button from './Button';
 import HistoryTab from './HistoryTab';
 
-export default function SearchBar() {
+export default function SearchBar({hideHistoryTab}) {
     return (
         <>
             <TouchableOpacity>
@@ -17,10 +17,10 @@ export default function SearchBar() {
                     </View>
                 </View>
             </TouchableOpacity>
-            <View style={styles.searchHistory}>
+            {!hideHistoryTab && <View style={styles.searchHistory}>
                 <HistoryTab name='Boston Common' city='Boston' />
                 <HistoryTab name='Fenway Park' city='Boston'/>
-            </View>
+            </View>}
         </>
     )
 }
@@ -53,6 +53,6 @@ const styles = StyleSheet.create({
     },
     searchHistory: {
         marginTop: 10,
-        marginLeft: 5,
+        marginLeft: 5
     }
 });

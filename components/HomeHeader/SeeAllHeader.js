@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginLeft: 25,
         marginBottom: 10,
-        marginTop: 15
+        
     },
     arrow: {
         marginTop: 7

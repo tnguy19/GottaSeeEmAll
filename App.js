@@ -14,9 +14,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Foundation, Entypo } from '@expo/vector-icons';
 import DiscoverHeader from './components/Discover/DiscoverHeader';
 import SeeAll from './screens/mainApp/SeeAll';
-import SeeAllHeader from './components/HomeHeader/SeeAllHeader';
 
-//SplashScreen.preventAutoHideAsync();
 
 const getFonts = () =>
   Font.loadAsync({
@@ -59,7 +57,9 @@ function MainAppTab() {
 }
 
 export default function App() {
+
   const [appIsReady, setAppIsReady] = useState(false);
+
 
   useEffect(() => {
     async function prepare() {
@@ -72,15 +72,8 @@ export default function App() {
         setAppIsReady(true);
       }
     }
-
     prepare();
   }, []);
-
-  // const onLayoutRootView = useCallback(async () => {
-  //   if (appIsReady) {
-  //     await SplashScreen.hideAsync();
-  //   }
-  // }, [appIsReady]);
 
   if (!appIsReady) {
     return null;

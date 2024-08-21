@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import HomeHeader from "../../components/HomeHeader/HomeHeader";
 import OverviewSection from "../../components/Section/OverviewSection";
 import CardCarousel from "../../components/Section/CardCarousel";
+import Map from "../../components/MapView/Map";
 
 export default function Home({ navigation }) {
     const [currentView, setCurrentView] = useState('Overview');
@@ -21,7 +22,7 @@ export default function Home({ navigation }) {
 
     if (currentView === 'Map') {
         return (
-            <></>
+            <Map/>
         )
     }
 

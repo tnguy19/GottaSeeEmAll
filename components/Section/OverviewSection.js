@@ -1,12 +1,20 @@
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import Button from "../SearchBar/Button";
+import { useNavigation } from "@react-navigation/native";
 
 export default function OverviewSection({ title, children }) {
+
+    const navigation = useNavigation();
+
+    function handleNavigation(title){
+        navigation.navigate('SeeAll', {title: title});
+    }
+
     return (
         <View style={styles.sectionContainer}>
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>{title}</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handleNavigation(title)}>
                     <Text style={styles.optionText}>See All</Text>
                 </TouchableOpacity>
             </View>

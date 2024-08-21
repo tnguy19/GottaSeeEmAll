@@ -13,10 +13,12 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useState, useEffect, useCallback } from 'react';
 import { Foundation, Entypo } from '@expo/vector-icons';
 import DiscoverHeader from './components/Discover/DiscoverHeader';
+import SeeAll from './screens/mainApp/SeeAll';
+import SeeAllHeader from './components/HomeHeader/SeeAllHeader';
 
 //SplashScreen.preventAutoHideAsync();
 
-const getFonts = () => 
+const getFonts = () =>
   Font.loadAsync({
     'figtree-regular': require("./assets/fonts/Figtree-Regular.ttf"),
     'figtree-medium': require("./assets/fonts/Figtree-Medium.ttf"),
@@ -26,31 +28,31 @@ const getFonts = () =>
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function MainAppTab(){
+function MainAppTab() {
   return (
     <Tab.Navigator screenOptions={{
       tabBarLabelStyle: {
-        color: 'black', 
+        color: 'black',
         fontFamily: 'figtree-medium',
         fontSize: 12
       }
     }}>
-      <Tab.Screen 
-        name='Home' 
+      <Tab.Screen
+        name='Home'
         component={Home}
         options={{
-          header:  () => <HomeHeader/>,
+          header: () => <HomeHeader />,
           tabBarIcon: ({ focused, size }) => <Foundation name="home" size={size} color={focused ? 'black' : '#808080'} />,
-          
+
         }}
       />
-      <Tab.Screen 
-        name='Discover' 
+      <Tab.Screen
+        name='Discover'
         component={Discover}
-        options = {{
-          header: () => <DiscoverHeader/>,
+        options={{
+          header: () => <DiscoverHeader />,
           tabBarIcon: ({ focused, size }) => <Entypo name="compass" size={size} color={focused ? 'black' : '#808080'} />,
-        }} 
+        }}
       />
     </Tab.Navigator>
   )
@@ -88,10 +90,17 @@ export default function App() {
     <>
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen
+          <Stack.Screen
             name='MainApp'
             component={MainAppTab}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='SeeAll'
+            component={SeeAll}
+            options={{ 
+             headerShown: false
+            }}
           />
           <Stack.Screen
             name='WelcomeScreen'
@@ -103,7 +112,6 @@ export default function App() {
             component={SelectionScreen}
             options={{ headerShown: false }}
           />
-
         </Stack.Navigator>
       </NavigationContainer>
     </>

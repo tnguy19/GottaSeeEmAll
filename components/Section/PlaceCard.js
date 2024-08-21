@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         overflow: 'hidden',
         marginTop: 20,
-        marginRight: 10,
+        marginHorizontal: 5,
     },
     ImageBackground: {
         flex: 1,

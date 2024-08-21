@@ -31,6 +31,6 @@ const styles = StyleSheet.create({
     },
     row: {
         justifyContent: 'space-between',
-        paddingHorizontal: 10
+        paddingHorizontal: 15
     }
 });

@@ -14,7 +14,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Foundation, Entypo } from '@expo/vector-icons';
 import DiscoverHeader from './components/Discover/DiscoverHeader';
 import SeeAll from './screens/mainApp/SeeAll';
-
+import Search from './screens/mainApp/Search';
 
 const getFonts = () =>
   Font.loadAsync({
@@ -93,6 +93,14 @@ export default function App() {
             component={SeeAll}
             options={{ 
              headerShown: false
+            }}
+          />
+           <Stack.Screen
+            name='Search'
+            component={Search}
+            options={{ 
+             headerShown: false,
+              animation: 'slide_from_bottom'
             }}
           />
           <Stack.Screen

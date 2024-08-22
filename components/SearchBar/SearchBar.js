@@ -3,10 +3,10 @@ import { FontAwesome } from '@expo/vector-icons';
 import Button from './Button';
 import HistoryTab from './HistoryTab';
 
-export default function SearchBar({hideHistoryTab}) {
+export default function SearchBar({hideHistoryTab, onPress}) {
     return (
         <>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={onPress}>
                 <View style={styles.searchBarContainer}>
                     <View style={styles.content}>
                         <View style={styles.placeholderContainer}>

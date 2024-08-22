@@ -14,7 +14,6 @@ export default function Home({ navigation }) {
     }
 
     useEffect(() => {
-        // Update the custom header to receive the toggleView function
         navigation.setOptions({
             header: () => <HomeHeader onPress={toggleView} />,
         });
@@ -26,10 +25,14 @@ export default function Home({ navigation }) {
         )
     }
 
+    function searchHandler(){
+        navigation.navigate('Search');
+    }
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.content}>
-                <SearchBar />
+                <SearchBar onPress={searchHandler} />
                 <OverviewSection title='Local Suggestions'>
                     <CardCarousel />
                 </OverviewSection>

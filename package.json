@@ -22,7 +22,8 @@
     "react-native": "0.74.5",
     "react-native-get-location": "^5.0.0",
     "react-native-maps": "1.14.0",
-    "expo-location": "~17.0.1"
+    "expo-location": "~17.0.1",
+    "react-native-reanimated": "~3.10.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

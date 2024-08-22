@@ -30,7 +30,7 @@ export default function Home({ navigation }) {
         <ScrollView style={styles.container}>
             <View style={styles.content}>
                 <SearchBar />
-                <OverviewSection title='Suggestions'>
+                <OverviewSection title='Local Suggestions'>
                     <CardCarousel />
                 </OverviewSection>
                 <OverviewSection title='Recently Visited'>

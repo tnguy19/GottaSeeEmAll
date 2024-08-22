@@ -3,13 +3,13 @@ import { ScrollView, StyleSheet } from 'react-native';
 import PlaceCard from './PlaceCard';
 import { placeholders } from '../../data/placeholders/places'; 
 
-export default function CardCarousel() {
+export default function CardCarousel({customStyle}) {
     return (
         <ScrollView
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.container}
+            contentContainerStyle={[styles.container, customStyle]}
         >
             {placeholders.map((item, index) => (
                 <PlaceCard

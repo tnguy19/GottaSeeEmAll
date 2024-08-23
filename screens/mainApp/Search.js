@@ -3,6 +3,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import FunctionalSearchBar from "../../components/SearchBar/FunctionalSearchBar";
+import { useRoute } from "@react-navigation/native";
 
 export default function Search() {
 
@@ -13,6 +14,8 @@ export default function Search() {
     ];
 
     const navigation = useNavigation();
+    const route = useRoute();
+    const {currentCity} = route.params;
 
     return (
         <SafeAreaView>
@@ -20,7 +23,7 @@ export default function Search() {
             <TouchableOpacity style={styles.backButtonContainer} onPress={() => navigation.goBack()}>
                 <AntDesign name="arrowleft" size={23} color="black" style={styles.arrow} />
             </TouchableOpacity>
-                <FunctionalSearchBar data={placeholders} />
+                <FunctionalSearchBar data={placeholders} currentLocation={currentCity} />
             </View>
         </SafeAreaView>
     )

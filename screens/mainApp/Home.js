@@ -44,7 +44,9 @@ export default function Home({ navigation }) {
     }
 
     function searchHandler() {
-        navigation.navigate('Search');
+        navigation.navigate('Search', {
+            currentCity: currentCity
+        });
     }
 
     return (

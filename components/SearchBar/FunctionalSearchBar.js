@@ -5,7 +5,7 @@ import HistoryTab from './HistoryTab';
 import { useState } from 'react';
 import SearchResults from './SearchResults';
 
-export default function FunctionalSearchBar({ onPress, data }) {
+export default function FunctionalSearchBar({ onPress, data, currentLocation }) {
 
     const [input, setInput] = useState('');
     const [filteredData, setFilteredData] = useState([]);
@@ -36,7 +36,7 @@ export default function FunctionalSearchBar({ onPress, data }) {
                                 onChangeText={handleSearch}
                             />
                         </View>
-                        <Button city='Boston' name='my-location' />
+                        <Button city={currentLocation} name='my-location' />
                     </View>
                 </View>
                 <View style={styles.resultsContainer}>

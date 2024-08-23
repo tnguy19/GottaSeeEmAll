@@ -6,7 +6,7 @@ import OverviewSection from "../../components/Section/OverviewSection";
 import CardCarousel from "../../components/Section/CardCarousel";
 import Map from "../../components/MapView/Map";
 import { LocationContext } from "../../context/LocationContext";
-import { getCity } from "../../utils/getCity";
+import { getCity } from "../../utils/apiFunctions";
 
 export default function Home({ navigation }) {
     const [currentView, setCurrentView] = useState('Overview');

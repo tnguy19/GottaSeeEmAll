@@ -17,7 +17,7 @@ import DiscoverHeader from './components/Discover/DiscoverHeader';
 import SeeAll from './screens/mainApp/SeeAll';
 import Search from './screens/mainApp/Search';
 import LocationProvider from './context/LocationContext';
-
+import LandmarkProvider from './context/LandmarkContext';
 
 const getFonts = () =>
   Font.loadAsync({
@@ -81,40 +81,42 @@ export default function App() {
 
   return (
     <LocationProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name='MainApp'
-            component={MainAppTab}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='SeeAll'
-            component={SeeAll}
-            options={{ 
-             headerShown: false
-            }}
-          />
-          <Stack.Screen
-            name='Search'
-            component={Search}
-            options={{ 
-             headerShown: false,
-              animation: 'slide_from_bottom'
-            }}
-          />
-          <Stack.Screen
-            name='WelcomeScreen'
-            component={WelcomeScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='SelectionScreen'
-            component={SelectionScreen}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <LandmarkProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name='MainApp'
+              component={MainAppTab}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='SeeAll'
+              component={SeeAll}
+              options={{
+                headerShown: false
+              }}
+            />
+            <Stack.Screen
+              name='Search'
+              component={Search}
+              options={{
+                headerShown: false,
+                animation: 'slide_from_bottom'
+              }}
+            />
+            <Stack.Screen
+              name='WelcomeScreen'
+              component={WelcomeScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='SelectionScreen'
+              component={SelectionScreen}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </LandmarkProvider>
     </LocationProvider>
   );
 }

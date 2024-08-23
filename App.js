@@ -1,10 +1,11 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import WelcomeScreen from './screens/WelcomeScreen';
 import SelectionScreen from './screens/SelectionScreen';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './screens/mainApp/Home';
 import Discover from './screens/mainApp/Discover';
 import HomeHeader from './components/HomeHeader/HomeHeader';
@@ -15,6 +16,8 @@ import { Foundation, Entypo } from '@expo/vector-icons';
 import DiscoverHeader from './components/Discover/DiscoverHeader';
 import SeeAll from './screens/mainApp/SeeAll';
 import Search from './screens/mainApp/Search';
+import LocationProvider from './context/LocationContext';
+
 
 const getFonts = () =>
   Font.loadAsync({
@@ -41,7 +44,6 @@ function MainAppTab() {
         options={{
           header: () => <HomeHeader />,
           tabBarIcon: ({ focused, size }) => <Foundation name="home" size={size} color={focused ? 'black' : '#808080'} />,
-
         }}
       />
       <Tab.Screen
@@ -60,7 +62,6 @@ export default function App() {
 
   const [appIsReady, setAppIsReady] = useState(false);
 
-
   useEffect(() => {
     async function prepare() {
       try {
@@ -68,7 +69,6 @@ export default function App() {
       } catch (e) {
         console.warn(e);
       } finally {
-        // Tell the application to render
         setAppIsReady(true);
       }
     }
@@ -80,7 +80,7 @@ export default function App() {
   }
 
   return (
-    <>
+    <LocationProvider>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -95,7 +95,7 @@ export default function App() {
              headerShown: false
             }}
           />
-           <Stack.Screen
+          <Stack.Screen
             name='Search'
             component={Search}
             options={{ 
@@ -115,7 +115,7 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </>
+    </LocationProvider>
   );
 }
 

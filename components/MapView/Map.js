@@ -1,26 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import MapView from "react-native-maps";
 import * as Location from 'expo-location';
 import { Marker } from "react-native-maps";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { LocationContext } from "../../context/LocationContext";
 
 export default function Map() {
 
-    const [location, setLocation] = useState();
-    useEffect(() => {
-        (async () => {
-
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
-                return;
-            }
-
-            let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-        })();
-    }, []);
+    const {location} = useContext(LocationContext);
 
     const placeholderCoords = [
         { latitude: 37.7749, longitude: -122.4194 },

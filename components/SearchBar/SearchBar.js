@@ -3,7 +3,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import Button from './Button';
 import HistoryTab from './HistoryTab';
 
-export default function SearchBar({hideHistoryTab, onPress}) {
+export default function SearchBar({hideHistoryTab, onPress, currentLocation}) {
     return (
         <>
             <TouchableOpacity onPress={onPress}>
@@ -13,7 +13,7 @@ export default function SearchBar({hideHistoryTab, onPress}) {
                             <FontAwesome name="search" size={15} color="black" />
                             <Text style={styles.text}>Search Landmark</Text>
                         </View>
-                        <Button city='Boston' name='my-location' />
+                        <Button city={currentLocation} name='my-location' />
                     </View>
                 </View>
             </TouchableOpacity>

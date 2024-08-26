@@ -6,7 +6,7 @@ import OverviewSection from "../../components/Section/OverviewSection";
 import CardCarousel from "../../components/Section/CardCarousel";
 import Map from "../../components/MapView/Map";
 import { LocationContext } from "../../context/LocationContext";
-import { getCity } from "../../utils/apiFunctions";
+import { getCity, searchNearby } from "../../utils/apiFunctions";
 
 export default function Home({ navigation }) {
     const [currentView, setCurrentView] = useState('Overview');
@@ -20,8 +20,11 @@ export default function Home({ navigation }) {
             if (location && location.coords) {
                 const city = await getCity(location.coords.latitude, location.coords.longitude);
                 setCurrentCity(city);
-                //console.log(city); 
             }
+        }
+
+        async function getNearby(){
+            await searchNearby(location.coords.latitude, location.coords.longitude);
         }
 
         fetchCity();

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { getLandmarks } from '../utils/apiFunctions';
+import { getLandmarks, searchLandmarks, searchNearby } from '../utils/apiFunctions';
 import { LocationContext } from './LocationContext';
 
 export const LandmarkContext = createContext();
@@ -10,10 +10,15 @@ export default function LandmarkProvider ({ children }) {
 
     useEffect(() => {
         async function fetchCityAndLandmarks() {
-            if (location) {
-                const landmarkData = await getLandmarks(location.coords.latitude, location.coords.longitude);
-                setLandmarks(landmarkData);
+            try {
+                if (location) {
+                    const landmarkData = await searchNearby(location.coords.latitude, location.coords.longitude);
+                    setLandmarks(landmarkData);
+                }
+            } catch (error) {
+                console.log(`Unable to fetch current location: ${error}`);
             }
+            
         }
         fetchCityAndLandmarks();
     }, [location]);

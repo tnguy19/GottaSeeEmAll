@@ -3,10 +3,8 @@ import * as Location from 'expo-location';
 
 export const LocationContext = createContext();
 
-export default function LocationProvider({ children }) {
+export function LocationProvider({ children }) {
     const [location, setLocation] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
-
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -21,7 +19,7 @@ export default function LocationProvider({ children }) {
     }, []);
 
     return (
-        <LocationContext.Provider value={{ location, errorMsg }}>
+        <LocationContext.Provider value={{ location }}>
             {children}
         </LocationContext.Provider>
     );

@@ -16,7 +16,7 @@ import { Foundation, Entypo } from '@expo/vector-icons';
 import DiscoverHeader from './components/Discover/DiscoverHeader';
 import SeeAll from './screens/mainApp/SeeAll';
 import Search from './screens/mainApp/Search';
-import LocationProvider from './context/LocationContext';
+import { LocationProvider } from './context/LocationContext';
 import LandmarkProvider from './context/LandmarkContext';
 
 const getFonts = () =>

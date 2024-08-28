@@ -25,7 +25,8 @@
     "react-native-get-location": "^5.0.0",
     "react-native-maps": "1.14.0",
     "react-native-reanimated": "~3.10.1",
-    "expo-sqlite": "~14.0.6"
+    "expo-sqlite": "~14.0.6",
+    "@react-native-async-storage/async-storage": "1.23.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

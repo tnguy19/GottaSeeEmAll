@@ -14,6 +14,7 @@ export default function Home({ navigation }) {
     const { location } = useContext(LocationContext);
 
     const [currentCity, setCurrentCity] = useState();
+    const [dataLoaded, setDataLoaded] = useState(false);
 
     useEffect(() => {
         async function fetchCity() {
@@ -23,12 +24,19 @@ export default function Home({ navigation }) {
             }
         }
 
-        async function getNearby(){
-            await searchNearby(location.coords.latitude, location.coords.longitude);
+        async function getNearby() {
+            try {
+                await searchNearby(location.coords.latitude, location.coords.longitude);
+                setDataLoaded(true);
+            } catch (error) {
+                console.log(`Unable to load data for Home screen: ${error}`);
+            }
         }
 
         fetchCity();
-    }, [location]);
+        getNearby();
+
+    }, [location, dataLoaded]);
 
     function toggleView(view) {
         setCurrentView(view);
@@ -55,15 +63,15 @@ export default function Home({ navigation }) {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.content}>
-                <SearchBar onPress={searchHandler} currentLocation={currentCity}/>
+                <SearchBar onPress={searchHandler} currentLocation={currentCity} />
                 <OverviewSection title='Local Suggestions'>
-                    <CardCarousel />
+                    {dataLoaded && <CardCarousel />}
                 </OverviewSection>
                 <OverviewSection title='Recently Visited'>
-                    <CardCarousel />
+                    {dataLoaded && <CardCarousel />}
                 </OverviewSection>
                 <OverviewSection title='Wishlist'>
-                    <CardCarousel />
+                    {dataLoaded && <CardCarousel />}
                 </OverviewSection>
             </View>
         </ScrollView>

@@ -1,9 +1,37 @@
 import { View, ImageBackground, StyleSheet, Text, Dimensions, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useState, useEffect } from "react";
+import { getLocationPhoto } from "../../utils/apiFunctions";
 
 const windowWidth = Dimensions.get('window').width;
+const placeholderImageUri = require('../../assets/locationImages/test1.jpg');
 
-export default function PlaceCard({ imageUri, title, location }) {
+export default function PlaceCard({ locationId, title }) {
+    //console.log(imageUris);
+
+    const [imageUris, setImageUris] = useState();
+    const  [imagesLoaded, setImagesLoaded] = useState(false);
+
+    useEffect(() => {
+        async function fetchImage() {
+            try {
+                const imagesList = await getLocationPhoto(locationId);
+                //console.log(imagesList)
+                setImageUris(imagesList ? imagesList : [placeholderImageUri]);
+                setImagesLoaded(true);
+            } catch (error) {
+                console.error('Failed to fetch image:', error);
+                setImageUris([placeholderImageUri]); 
+            }
+        }
+
+        fetchImage();
+    }, [locationId]);
+
+    console.log(imageUris);
+
+    const imageUri = imagesLoaded && imageUris.length > 0 ? { uri: imageUris[0].imageUrl } : placeholderImageUri;
+
     return (
         <TouchableOpacity>
             <View style={styles.cardContainer}>
@@ -18,7 +46,7 @@ export default function PlaceCard({ imageUri, title, location }) {
                     >
                         <View style={styles.textContainer}>
                             <Text style={styles.title}>{title}</Text>
-                            <Text style={styles.location}>{location}</Text>
+                        {/* <Text style={styles.location}>{location}</Text> */}
                         </View>
                     </LinearGradient>
                 </ImageBackground>

@@ -1,8 +1,9 @@
-import { GOOGLE_API_KEY, TRIP_ADVISOR_KEY } from "./api_keys";
+import { GOOGLE_API_KEY, TRIP_ADVISOR_KEY, GEO_APIFY_KEY } from "./api_keys";
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Landmark } from "./landmark";
 
-const areaRadius = 5000;
+const areaRadius = 2000;
 const radiusUnit = 'km';
 
 //Function to get city name from input coords using Google API
@@ -25,37 +26,83 @@ export async function getCity(latitude, longitude) {
     }
 }
 
-// Function to search nearby landmarks with TripAdvvisor API
-export async function searchNearby(latitude, longitude) {
-    const url = `https://api.content.tripadvisor.com/api/v1/location/nearby_search?category=attractions&latLong=${latitude}%2C${longitude}&radius=${areaRadius}&radiusUnit=${radiusUnit}&language=en&key=${TRIP_ADVISOR_KEY}`;
-    //console.log(url);
+export async function getNearbyLandmarks(latitude, longitude) {
+    const url = `https://api.geoapify.com/v2/places?categories=tourism.sights&filter=circle:${longitude},${latitude},${areaRadius}&apiKey=${GEO_APIFY_KEY}`;
+    console.log(url);
     try {
         const response = await axios.get(url);
-        const landmarksData = response.data.data;
+        //const data = response.data.features[0].properties;
+        const data = response.data.features;
+        //console.log(data);
+        const landmarks = [];
+        data.forEach(dataPoint => {
+            const properties = dataPoint.properties;
+            const landmark = new Landmark(properties.name, properties.lat, properties.lon, properties.formatted, properties.datasource.url);
+            landmarks.push(landmark);
+        })
 
-        if (!Array.isArray(landmarksData)) {
-            throw new Error('Expected an array of landmarks');
-        }
-
-        const landmarks = landmarksData.map(landmark => ({
-            name: landmark.name,
-            location_id: landmark.location_id
-        }));
-
-        await AsyncStorage.setItem('landmarks', JSON.stringify(landmarks));
-        console.log('Landmarks saved to device storage.');
+        // landmarks.forEach(landmark => {
+        //     console.log(`landmark: ${landmark.name}, lat: ${landmark.latitude}, lon: ${landmark.longitude},`)
+        // })
+        return landmarks;
     } catch (error) {
-        console.error(`Error while searching for nearby landmarks: ${error}`);
+        console.log(`Unable to get nearby landmarks in getNearbyLandmarks: ${error}`)
+    }
+}
+
+// Function to search nearby landmarks with TripAdvvisor API
+export async function searchNearby(landmarks) {
+    try {
+        // Retrieve existing landmarks from AsyncStorage
+        const storedLandmarksJSON = await AsyncStorage.getItem('landmarksID');
+        const storedLandmarks = storedLandmarksJSON ? JSON.parse(storedLandmarksJSON) : [];
+
+        for (const landmark of landmarks) {
+            const landmarkName = landmark.name;
+            const landmarkLat = landmark.latitude;
+            const landmarkLong = landmark.longitude;
+            const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=${TRIP_ADVISOR_KEY}&searchQuery=${landmarkName}&latLong=${landmarkLat}%2C${landmarkLong}&language=en`;
+
+            try {
+                const response = await axios.get(url);
+                const landmarksData = response.data.data;
+
+                const landmarkID = landmarksData.map(landmark => ({
+                    name: landmark.name,
+                    location_id: landmark.location_id
+                }));
+
+                for (const newLandmark of landmarkID) {
+                    const isDuplicate = storedLandmarks.some(storedLandmark =>
+                        storedLandmark.location_id === newLandmark.location_id
+                    );
+
+                    if (!isDuplicate) {
+                        storedLandmarks.push(newLandmark);
+                        await AsyncStorage.setItem('landmarksID', JSON.stringify(storedLandmarks));
+                        console.log('New landmark added and saved to device storage:', newLandmark.name);
+                    } else {
+                        console.log('Duplicate landmark:', newLandmark.name);
+                    }
+                }
+
+            } catch (error) {
+                console.error(`Error while searching and storing landmark with url ${url}: ${error}`);
+            }
+        }
+    } catch (error) {
+        console.error(`Error in searchNearby function: ${error}`);
     }
 }
 
 // Function to retrieve landmarks from local device
 export async function getStoredLandmarks() {
     try {
-        const landmarks = await AsyncStorage.getItem('landmarks');
-        return landmarks ? JSON.parse(landmarks) : [];
+        const landmarksID = await AsyncStorage.getItem('landmarksID');
+        console.log(`landmarksID: ${landmarksID}`);
+        return landmarksID ? JSON.parse(landmarksID) : [];
     } catch (error) {
-       console.error('Failed to load landmarks from storage:', error);
+        console.error('Failed to load landmarks from storage:', error);
     }
 }
 
@@ -71,7 +118,7 @@ export async function getLocationPhoto(locationId) {
         //console.log(photosData);
         const imageLinks = photosData.map(dataPoint => ({
             imageUrl: dataPoint.images?.medium?.url || '',
-        })).filter(photoInfo => photoInfo.imageUrl); // filter out empty URLs
+        })).filter(photoInfo => photoInfo.imageUrl); 
         //console.log(imageLinks)
 
         return imageLinks;

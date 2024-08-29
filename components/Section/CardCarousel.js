@@ -1,25 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import PlaceCard from './PlaceCard';
-import { getLocationPhoto, getStoredLandmarks } from '../../utils/apiFunctions';
 
-
-export default function CardCarousel({ customStyle }) {
-    const [landmarks, setLandmarks] = useState([]);
-
-    useEffect(() => {
-        async function fetchLandmarks() {
-            try {
-                const storedLandmarks = await getStoredLandmarks();
-                setLandmarks(storedLandmarks);
-                //console.log(landmarks);
-            } catch (error) {
-                console.error('Failed to fetch landmarks from storage:', error);
-            }
-        }
-        fetchLandmarks();
-    }, []);
-
+export default function CardCarousel({ customStyle, storedLandmarkIDs, landmarkPhotos }) {
     return (
         <ScrollView
             horizontal
@@ -27,11 +10,12 @@ export default function CardCarousel({ customStyle }) {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={[styles.container, customStyle]}
         >
-            {landmarks.map((landmark, index) => (
+            {storedLandmarkIDs.map((landmark, index) => (
                 <PlaceCard
                     key={index}
                     locationId={landmark.location_id}
                     title={landmark.name}
+                    imageUri={landmarkPhotos[landmark.location_id]}
                 />
             ))}
         </ScrollView>

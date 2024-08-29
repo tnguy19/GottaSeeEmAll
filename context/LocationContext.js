@@ -14,6 +14,7 @@ export function LocationProvider({ children }) {
             }
 
             let location = await Location.getCurrentPositionAsync({});
+            //console.log("Location succesffully fetched:", location);
             setLocation(location);
         })();
     }, []);

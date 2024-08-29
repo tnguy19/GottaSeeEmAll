@@ -1,52 +1,40 @@
-import { View, ImageBackground, StyleSheet, Text, Dimensions, TouchableOpacity } from "react-native";
+import React, { useState } from 'react';
+import { View, ImageBackground, StyleSheet, Text, Dimensions, TouchableOpacity, ActivityIndicator } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useState, useEffect } from "react";
-import { getLocationPhoto } from "../../utils/apiFunctions";
 
 const windowWidth = Dimensions.get('window').width;
 const placeholderImageUri = require('../../assets/locationImages/test1.jpg');
 
-export default function PlaceCard({ locationId, title }) {
-    //console.log(imageUris);
+export default function PlaceCard({ locationId, title, imageUri }) {
+    const [loading, setLoading] = useState(true);
 
-    const [imageUris, setImageUris] = useState();
-    const  [imagesLoaded, setImagesLoaded] = useState(false);
-
-    useEffect(() => {
-        async function fetchImage() {
-            try {
-                const imagesList = await getLocationPhoto(locationId);
-                //console.log(imagesList)
-                setImageUris(imagesList ? imagesList : [placeholderImageUri]);
-                setImagesLoaded(true);
-            } catch (error) {
-                console.error('Failed to fetch image:', error);
-                setImageUris([placeholderImageUri]); 
-            }
-        }
-
-        fetchImage();
-    }, [locationId]);
-
-    console.log(imageUris);
-
-    const imageUri = imagesLoaded && imageUris.length > 0 ? { uri: imageUris[0].imageUrl } : placeholderImageUri;
+    function loadingFinishHandler(){
+        setLoading(false);
+    }
+    const imageSource = imageUri ? { uri: imageUri } : placeholderImageUri;
 
     return (
         <TouchableOpacity>
             <View style={styles.cardContainer}>
                 <ImageBackground
-                    source={imageUri}
+                    source={imageSource}
                     style={styles.ImageBackground}
                     resizeMode="cover"
+                    onLoadEnd={loadingFinishHandler}
                 >
+                    {loading && (
+                        <ActivityIndicator
+                            size="large"
+                            color="#ffffff"
+                            style={styles.loadingIndicator}
+                        />
+                    )}
                     <LinearGradient
                         colors={['transparent', 'rgba(0,0,0,0.8)']}
                         style={styles.gradient}
                     >
                         <View style={styles.textContainer}>
                             <Text style={styles.title}>{title}</Text>
-                        {/* <Text style={styles.location}>{location}</Text> */}
                         </View>
                     </LinearGradient>
                 </ImageBackground>
@@ -81,9 +69,10 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: 'figtree-bold'
     },
-    location: {
-        fontSize: 10,
-        color: 'white',
-        fontFamily: 'figtree-medium'
+    loadingIndicator: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: [{ translateX: -20 }, { translateY: -20 }], // Adjust as needed
     },
 });

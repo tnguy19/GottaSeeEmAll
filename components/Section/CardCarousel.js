@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import PlaceCard from './PlaceCard';
 
-export default function CardCarousel({ customStyle, storedLandmarkIDs, landmarkPhotos }) {
+export default function CardCarousel({ customStyle, landmarks }) {
     return (
         <ScrollView
             horizontal
@@ -10,12 +10,13 @@ export default function CardCarousel({ customStyle, storedLandmarkIDs, landmarkP
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={[styles.container, customStyle]}
         >
-            {storedLandmarkIDs.map((landmark, index) => (
+            {landmarks.map((landmark, index) => (
                 <PlaceCard
                     key={index}
-                    locationId={landmark.location_id}
+                    locationId={landmark.api_id}
                     title={landmark.name}
-                    imageUri={landmarkPhotos[landmark.location_id]}
+                    address={landmark.address}
+                    imageUri={landmark.photo}
                 />
             ))}
         </ScrollView>

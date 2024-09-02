@@ -104,16 +104,6 @@ export default function App() {
                 animation: 'slide_from_bottom'
               }}
             />
-            <Stack.Screen
-              name='WelcomeScreen'
-              component={WelcomeScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='SelectionScreen'
-              component={SelectionScreen}
-              options={{ headerShown: false }}
-            />
           </Stack.Navigator>
         </NavigationContainer>
       </LandmarkProvider>

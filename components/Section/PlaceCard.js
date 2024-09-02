@@ -5,14 +5,14 @@ import { LinearGradient } from "expo-linear-gradient";
 const windowWidth = Dimensions.get('window').width;
 const placeholderImageUri = require('../../assets/locationImages/test1.jpg');
 
-export default function PlaceCard({ locationId, title, imageUri }) {
+export default function PlaceCard({ locationId, title, imageUri, address }) {
     const [loading, setLoading] = useState(true);
 
     function loadingFinishHandler(){
         setLoading(false);
     }
     const imageSource = imageUri ? { uri: imageUri } : placeholderImageUri;
-
+    //console.log(imageSource);
     return (
         <TouchableOpacity>
             <View style={styles.cardContainer}>

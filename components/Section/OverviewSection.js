@@ -2,12 +2,12 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import Button from "../SearchBar/Button";
 import { useNavigation } from "@react-navigation/native";
 
-export default function OverviewSection({ title, children }) {
+export default function OverviewSection({ title, children, landmarks }) {
 
     const navigation = useNavigation();
 
     function handleNavigation(title){
-        navigation.navigate('SeeAll', {title: title});
+        navigation.navigate('SeeAll', {title: title, landmarks: landmarks });
     }
 
     return (

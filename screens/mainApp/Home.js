@@ -60,13 +60,13 @@ export default function Home({ navigation }) {
         <ScrollView style={styles.container}>
             <View style={styles.content}>
                 <SearchBar onPress={searchHandler} currentLocation={currentCity} />
-                <OverviewSection title='Local Suggestions'>
+                <OverviewSection title='Local Suggestions' landmarks={landmarks}>
                     {dataLoaded && <CardCarousel landmarks={landmarks}/>}
                 </OverviewSection>
-                <OverviewSection title='Recently Visited'>
+                <OverviewSection title='Recently Visited' landmarks={landmarks}>
                     {dataLoaded && <CardCarousel landmarks={landmarks}/>}
                 </OverviewSection>
-                <OverviewSection title='Wishlist'>
+                <OverviewSection title='Wishlist' landmarks={landmarks}>
                     {dataLoaded && <CardCarousel landmarks={landmarks} />}
                 </OverviewSection>
             </View>

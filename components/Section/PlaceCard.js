@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
 import { View, ImageBackground, StyleSheet, Text, Dimensions, TouchableOpacity, ActivityIndicator } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 const placeholderImageUri = require('../../assets/locationImages/test1.jpg');
 
 export default function PlaceCard({ locationId, title, imageUri, address }) {
     const [loading, setLoading] = useState(true);
+    const navigation = useNavigation();
 
     function loadingFinishHandler(){
         setLoading(false);
     }
+
+    function handlePress(){
+        navigation.navigate('LocationDetails', {title: title, imageUri: imageUri, address: address });
+    }
     const imageSource = imageUri ? { uri: imageUri } : placeholderImageUri;
     //console.log(imageSource);
+
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handlePress}>
             <View style={styles.cardContainer}>
                 <ImageBackground
                     source={imageSource}

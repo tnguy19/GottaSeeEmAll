@@ -4,8 +4,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import WelcomeScreen from './screens/WelcomeScreen';
-import SelectionScreen from './screens/SelectionScreen';
 import Home from './screens/mainApp/Home';
 import Discover from './screens/mainApp/Discover';
 import HomeHeader from './components/HomeHeader/HomeHeader';
@@ -18,6 +16,7 @@ import SeeAll from './screens/mainApp/SeeAll';
 import Search from './screens/mainApp/Search';
 import { LocationProvider } from './context/LocationContext';
 import LandmarkProvider from './context/LandmarkContext';
+import LocationDetails from './screens/mainApp/LocationDetails';
 
 const getFonts = () =>
   Font.loadAsync({
@@ -59,7 +58,7 @@ function MainAppTab() {
 }
 
 export default function App() {
-  
+
   const [appIsReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
@@ -102,6 +101,13 @@ export default function App() {
               options={{
                 headerShown: false,
                 animation: 'slide_from_bottom'
+              }}
+            />
+            <Stack.Screen
+              name='LocationDetails'
+              component={LocationDetails}
+              options={{
+                headerShown: false
               }}
             />
           </Stack.Navigator>

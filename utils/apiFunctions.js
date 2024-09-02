@@ -1,4 +1,4 @@
-import { GOOGLE_API_KEY, TRIP_ADVISOR_KEY, GOOGLE_MAPS_API_KEY } from "./api_keys";
+import { GOOGLE_API_KEY, GOOGLE_MAPS_API_KEY } from "./api_keys";
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Landmark } from "./landmark";

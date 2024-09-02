@@ -2,18 +2,31 @@ import { View, StyleSheet } from "react-native";
 import OverviewSection from "../../components/Section/OverviewSection";
 import PlaceList from "../../components/PlaceList";
 import CardCarousel from "../../components/Section/CardCarousel";
+import { useContext, useEffect, useState } from "react";
+import { LandmarkContext } from "../../context/LandmarkContext";
 
 export default function Discover() {
+
+    const { landmarks } = useContext(LandmarkContext);
+    const [dataLoaded, setDataLoaded] = useState(false);
+
+    useEffect(() => {
+        if (landmarks && landmarks.length > 0) {
+            console.log(`Landmarks updated: ${landmarks}`)
+            setDataLoaded(true);
+        }
+    }, [landmarks]);
+
     return (
         <View style={styles.container}>
             <OverviewSection title='Your next destination'>
-                <CardCarousel customStyle={styles.carouselCustomStyle} />
+                {dataLoaded && <CardCarousel landmarks={landmarks} />}
             </OverviewSection>
             <OverviewSection title='Top Rated'>
-                <CardCarousel customStyle={styles.carouselCustomStyle} />
+                {dataLoaded && <CardCarousel landmarks={landmarks} />}
             </OverviewSection>
             <OverviewSection title='Blogs'>
-                <CardCarousel customStyle={styles.carouselCustomStyle} />
+                {dataLoaded && <CardCarousel landmarks={landmarks} />}
             </OverviewSection>
         </View>
     )

@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-export default function SeeAllHeader({ title }) {
+export default function SeeAllHeader({ title, showTitle }) {
 
     const navigation = useNavigation();
 
@@ -11,7 +11,7 @@ export default function SeeAllHeader({ title }) {
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <AntDesign name="arrowleft" size={23} color="black" style={styles.arrow} />
             </TouchableOpacity>
-            <Text style={styles.title}>{title}</Text>
+            {!showTitle && <Text style={styles.title}>{title}</Text>}
         </SafeAreaView>
     )
 }

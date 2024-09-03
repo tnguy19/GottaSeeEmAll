@@ -29,6 +29,10 @@ export default function Map() {
                             longitudeDelta: 0.07,
                         }}
                     >
+                        <Marker 
+                            coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude}}
+                            title={'Your current location'}
+                        />
                         {
                             placeholderCoords && (
                                 placeholderCoords.map((marker, index) => (

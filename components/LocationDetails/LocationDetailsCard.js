@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import DetailsContainer from './DetailsContainer';
 
 export default function LocationDetailsCard({ title, address, businessStatus, currentOpeningHours, userRatingCount, websiteUri, rating }) {
-    const openingHours = currentOpeningHours.weekdayDescriptions;
+    const openingHours = currentOpeningHours ? currentOpeningHours.weekdayDescriptions : ['Available every day'];
     return (
         <View style={styles.cardContainer}>
             <View style={styles.titleContainer}>

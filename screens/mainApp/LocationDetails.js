@@ -1,6 +1,7 @@
-import { View, SafeAreaView, StyleSheet, ImageBackground, Text } from 'react-native';
+import { View, StyleSheet, ImageBackground, Text, SafeAreaView } from 'react-native';
 import SeeAllHeader from '../../components/HomeHeader/SeeAllHeader';
 import { LinearGradient } from 'expo-linear-gradient';
+import BackButton from '../../components/BackButton';
 
 export default function LocationDetails({ route }) {
     const title = route.params.title;
@@ -8,46 +9,48 @@ export default function LocationDetails({ route }) {
     const address = route.params.address;
 
     return (
-        <SafeAreaView style={styles.safeArea}>
-            <View style={styles.screenContainer}>
-                <SeeAllHeader showTitle={false} />
-                <View style={styles.cardContainer}>
-                    <ImageBackground
-                        source={{ uri: imageUri }}
-                        style={styles.imageBackground}
-                        resizeMode="cover"
-                    >
-                        <LinearGradient
-                            colors={['transparent', 'rgba(0,0,0,0.8)']}
-                            style={styles.gradient}
-                        >
-                            <View style={styles.textContainer}>
-                                <Text style={styles.title}>{title}</Text>
-                            </View>
-                        </LinearGradient>
-                    </ImageBackground>
-                </View>
-            </View>
-        </SafeAreaView>
+        <View style={styles.screenContainer}>
+            <ImageBackground
+                source={{ uri: imageUri }}
+                style={styles.imageBackground}
+                resizeMode="cover"
+                imageStyle={styles.image}
+            >
+                <SafeAreaView style={styles.backButtonContainer}>
+                    <BackButton />
+                </SafeAreaView>
+                <LinearGradient
+                    colors={['transparent', 'rgba(0,0,0,0.8)']}
+                    style={styles.gradient}
+                >
+                    <View style={styles.textContainer}>
+                        <Text style={styles.title}>{title}</Text>
+                    </View>
+                </LinearGradient>
+            </ImageBackground>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-    },
     screenContainer: {
         flex: 1,
-        padding: 18,
-    },
-    cardContainer: {
-        borderRadius: 10,
-        overflow: 'hidden',
     },
     imageBackground: {
-        justifyContent: 'flex-end',
         width: '100%',
-        height: 250,
+        height: 350, 
+        justifyContent: 'flex-end',
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+        alignSelf: 'center',
+    },
+    backButtonContainer: {
+        position: 'absolute',
+        top: 50,  // Adjust to move the button down
+        left: 18, // Adjust to move the button horizontally
+        zIndex: 1,
     },
     gradient: {
         flex: 1,
@@ -57,10 +60,10 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         paddingHorizontal: 10,
-        paddingBottom: 10,
+        paddingBottom: 30,
     },
     title: {
-        fontSize: 18,
+        fontSize: 25,
         color: 'white',
         fontFamily: 'figtree-bold',
     },

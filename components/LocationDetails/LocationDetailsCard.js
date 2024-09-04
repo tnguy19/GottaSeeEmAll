@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet } from 'react-native';
+import DetailsContainer from './DetailsContainer';
 
 export default function LocationDetailsCard({ title, address, businessStatus, currentOpeningHours, userRatingCount, websiteUri, rating }) {
-    console.log(currentOpeningHours);
+    const openingHours = currentOpeningHours.weekdayDescriptions;
     return (
         <View style={styles.cardContainer}>
             <View style={styles.titleContainer}>
@@ -9,9 +10,18 @@ export default function LocationDetailsCard({ title, address, businessStatus, cu
                 <View style={styles.underline}></View>
             </View>
             <View style={styles.detailsContainer}>
-                <Text style={styles.cardAddress}>{address}</Text>
-                <Text>{businessStatus}</Text>
-                <Text>{currentOpeningHours.weekdayDescriptions}</Text>
+                <DetailsContainer icon='address'>
+                    <Text style={styles.text}>{address}</Text>
+                </DetailsContainer>
+                {/* <Text>{businessStatus}</Text> */}
+                <DetailsContainer icon='calendar'>
+                    <View style={{ flexDirection: 'column' }}>
+                        {openingHours.map((entry, index) => (
+                            <Text key={index} style={[styles.text, { paddingVertical: 5 }]}>{entry}</Text>
+                        ))}
+                    </View>
+                </DetailsContainer>
+
                 <Text>{userRatingCount}</Text>
                 <Text>{websiteUri}</Text>
                 <Text>{rating}</Text>
@@ -37,10 +47,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         paddingVertical: 20
     },
-    cardAddress: {
-        marginTop: 5,
-        fontSize: 16,
-        color: 'gray',
+    text: {
+        fontSize: 14,
+        color: 'black',
+        fontFamily: 'figtree-regular',
+        marginTop: 2,
+        marginLeft: 15
     },
     underline: {
         backgroundColor: '#E5E4E2',

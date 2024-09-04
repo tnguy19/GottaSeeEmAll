@@ -25,32 +25,38 @@ export async function getCity(latitude, longitude) {
 
 
 export async function getNearbyLandmarks(latitude, longitude) {
-   let landmarks = [];
-   const searchNearbyUrl = 'https://places.googleapis.com/v1/places:searchNearby';
+    let landmarks = [];
+    const searchNearbyUrl = 'https://places.googleapis.com/v1/places:searchNearby';
     try {
         const response = await axios.post(searchNearbyUrl, {
             includedTypes: ["tourist_attraction"],
             maxResultCount: 20,
             locationRestriction: {
-              circle: {
-                center: {
-                  latitude: latitude,
-                  longitude: longitude,
+                circle: {
+                    center: {
+                        latitude: latitude,
+                        longitude: longitude,
+                    },
+                    radius: 1000.0,
                 },
-                radius: 1000.0,
-              },
             },
-          }, {
+        }, {
             headers: {
-              'Content-Type': 'application/json',
-              'X-Goog-Api-Key': GOOGLE_MAPS_API_KEY,
-              'X-Goog-FieldMask': 'places.id,places.displayName,places.photos,places.formattedAddress,places.location,places.businessStatus,places.regularOpeningHours,places.priceLevel,places.rating,places.userRatingCount,places.websiteUri',
+                'Content-Type': 'application/json',
+                'X-Goog-Api-Key': GOOGLE_MAPS_API_KEY,
+                'X-Goog-FieldMask': 'places.id,places.displayName,places.photos,places.formattedAddress,places.location,places.businessStatus,places.regularOpeningHours,places.priceLevel,places.rating,places.userRatingCount,places.websiteUri',
             }
-          });
-          
+        });
 
+        if (!response || !response.data) {
+            throw new Error("Response or response data is undefined");
+        }
         const placeData = response.data.places;
-        //console.log('Place Data:', placeData);
+        if (!placeData || placeData.length === 0) {
+            throw new Error("Place data is undefined or empty");
+        }
+
+        console.log('Place Data:', placeData);
 
         for (const place of placeData) {
             //console.log(place);
@@ -71,7 +77,7 @@ export async function getNearbyLandmarks(latitude, longitude) {
             );
             //console.log(newLandmark.currentOpeningHours)
             landmarks.push(newLandmark);
-            console.log('Succesfully retrieved landmark:',landmarks);
+            console.log('Succesfully retrieved landmark:', landmarks);
         }
         return landmarks;
     } catch (error) {
@@ -82,7 +88,7 @@ export async function getNearbyLandmarks(latitude, longitude) {
 const maxWidthPx = '720';
 
 //Check api doc if unclear
-async function getPlacePhoto(api_photo_name){
+async function getPlacePhoto(api_photo_name) {
     const photoURL = `https://places.googleapis.com/v1/${api_photo_name}/media?key=${GOOGLE_MAPS_API_KEY}&maxWidthPx=${maxWidthPx}&skipHttpRedirect=true`;
 
     try {

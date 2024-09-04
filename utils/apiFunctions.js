@@ -44,11 +44,13 @@ export async function getNearbyLandmarks(latitude, longitude) {
             headers: {
               'Content-Type': 'application/json',
               'X-Goog-Api-Key': GOOGLE_MAPS_API_KEY,
-              'X-Goog-FieldMask': 'places.id,places.displayName,places.photos,places.formattedAddress,places.location,places.businessStatus',
+              'X-Goog-FieldMask': 'places.id,places.displayName,places.photos,places.formattedAddress,places.location,places.businessStatus,places.regularOpeningHours,places.priceLevel,places.rating,places.userRatingCount,places.websiteUri',
             }
           });
+          
 
         const placeData = response.data.places;
+        //console.log('Place Data:', placeData);
 
         for (const place of placeData) {
             //console.log(place);
@@ -61,9 +63,15 @@ export async function getNearbyLandmarks(latitude, longitude) {
                 place.formattedAddress,
                 place.businessStatus,
                 placePhoto,
-                place.id
+                place.id,
+                place.regularOpeningHours,
+                place.rating,
+                place.userRatingCount,
+                place.websiteUri
             );
+            //console.log(newLandmark.currentOpeningHours)
             landmarks.push(newLandmark);
+            console.log('Succesfully retrieved landmark:',landmarks);
         }
         return landmarks;
     } catch (error) {

@@ -16,6 +16,7 @@ export default function Home({ navigation }) {
     const [currentCity, setCurrentCity] = useState();
     const [dataLoaded, setDataLoaded] = useState(false);
 
+    console.log(landmarks)
     useEffect(() => {
         async function fetchCity() {
             if (location && location.coords) {
@@ -27,6 +28,7 @@ export default function Home({ navigation }) {
         fetchCity();
     }, [location]);
 
+ 
     useEffect(() => {
         if (landmarks && landmarks.length > 0) {
             console.log(`Landmarks updated: ${landmarks}`)
@@ -55,7 +57,7 @@ export default function Home({ navigation }) {
             <Map />
         );
     }
-
+    
     return (
         <ScrollView style={styles.container}>
             <View style={styles.content}>

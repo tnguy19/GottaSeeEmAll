@@ -1,13 +1,22 @@
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function LocationDetailsCard({ title, address }) {
+export default function LocationDetailsCard({ title, address, businessStatus, currentOpeningHours, userRatingCount, websiteUri, rating }) {
+    console.log(currentOpeningHours);
     return (
         <View style={styles.cardContainer}>
             <View style={styles.titleContainer}>
                 <Text style={styles.cardTitle}>{title}</Text>
                 <View style={styles.underline}></View>
             </View>
-            <Text style={styles.cardAddress}>{address}</Text>
+            <View style={styles.detailsContainer}>
+                <Text style={styles.cardAddress}>{address}</Text>
+                <Text>{businessStatus}</Text>
+                <Text>{currentOpeningHours.weekdayDescriptions}</Text>
+                <Text>{userRatingCount}</Text>
+                <Text>{websiteUri}</Text>
+                <Text>{rating}</Text>
+            </View>
+
         </View>
     );
 }
@@ -21,7 +30,7 @@ const styles = StyleSheet.create({
     titleContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        
+
     },
     cardTitle: {
         fontSize: 18,

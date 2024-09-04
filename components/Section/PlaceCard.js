@@ -6,7 +6,21 @@ import { useNavigation } from '@react-navigation/native';
 const windowWidth = Dimensions.get('window').width;
 const placeholderImageUri = require('../../assets/locationImages/test1.jpg');
 
-export default function PlaceCard({ locationId, title, imageUri, address }) {
+export default function PlaceCard(props) {
+    const {
+        locationId,
+        title,
+        imageUri,
+        address,
+        businessStatus,
+        currentOpeningHours,
+        userRatingCount,
+        websiteUri,
+        rating
+    } = props; 
+
+    //console.log('Current opening hours', currentOpeningHours);
+
     const [loading, setLoading] = useState(true);
     const navigation = useNavigation();
 
@@ -15,7 +29,7 @@ export default function PlaceCard({ locationId, title, imageUri, address }) {
     }
 
     function handlePress(){
-        navigation.navigate('LocationDetails', {title: title, imageUri: imageUri, address: address });
+        navigation.navigate('LocationDetails',{ ...props });
     }
     const imageSource = imageUri ? { uri: imageUri } : placeholderImageUri;
     //console.log(imageSource);

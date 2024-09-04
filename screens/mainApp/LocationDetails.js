@@ -4,10 +4,17 @@ import BackButton from '../../components/BackButton';
 import LocationDetailsCard from '../../components/LocationDetails/LocationDetailsCard';
 
 export default function LocationDetails({ route }) {
-    const title = route.params.title;
-    const imageUri = route.params.imageUri;
-    const address = route.params.address;
-
+    const {
+        title,
+        imageUri,
+        address,
+        businessStatus,
+        currentOpeningHours,
+        userRatingCount,
+        websiteUri,
+        rating
+    } = route.params;
+    //console.log(rating);
     return (
         <View style={styles.screenContainer}>
             <ImageBackground
@@ -27,7 +34,15 @@ export default function LocationDetails({ route }) {
                     </View>
                 </LinearGradient>
             </ImageBackground>
-            <LocationDetailsCard title={title} address={address}/>
+            <LocationDetailsCard 
+                title={title} 
+                address={address}
+                businessStatus={businessStatus}
+                currentOpeningHours={currentOpeningHours}
+                userRatingCount={userRatingCount}
+                websiteUri={websiteUri}
+                rating={rating}
+            />
         </View>
     );
 }

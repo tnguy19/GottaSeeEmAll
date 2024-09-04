@@ -1,7 +1,7 @@
 import { View, StyleSheet, ImageBackground, Text, SafeAreaView } from 'react-native';
-import SeeAllHeader from '../../components/HomeHeader/SeeAllHeader';
 import { LinearGradient } from 'expo-linear-gradient';
 import BackButton from '../../components/BackButton';
+import LocationDetailsCard from '../../components/LocationDetails/LocationDetailsCard';
 
 export default function LocationDetails({ route }) {
     const title = route.params.title;
@@ -14,7 +14,6 @@ export default function LocationDetails({ route }) {
                 source={{ uri: imageUri }}
                 style={styles.imageBackground}
                 resizeMode="cover"
-                imageStyle={styles.image}
             >
                 <SafeAreaView style={styles.backButtonContainer}>
                     <BackButton />
@@ -28,6 +27,7 @@ export default function LocationDetails({ route }) {
                     </View>
                 </LinearGradient>
             </ImageBackground>
+            <LocationDetailsCard title={title} address={address}/>
         </View>
     );
 }
@@ -38,18 +38,13 @@ const styles = StyleSheet.create({
     },
     imageBackground: {
         width: '100%',
-        height: 350, 
+        height: 350,
         justifyContent: 'flex-end',
-    },
-    image: {
-        width: '100%',
-        height: '100%',
-        alignSelf: 'center',
     },
     backButtonContainer: {
         position: 'absolute',
-        top: 50,  // Adjust to move the button down
-        left: 18, // Adjust to move the button horizontally
+        top: 50,
+        left: 18,
         zIndex: 1,
     },
     gradient: {
@@ -67,4 +62,5 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: 'figtree-bold',
     },
+    
 });

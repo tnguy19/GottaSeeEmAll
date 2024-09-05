@@ -16,7 +16,7 @@ export default function LandmarkProvider({ children }) {
                     setLandmarks(landmarkData);
                     console.log('Landmark Data:', landmarkData)
                 }
-                //console.log('Successfully retrieved landmarks', landmarks);
+                console.log('Successfully retrieved landmarks', landmarks);
             } catch (error) {
                 console.log(`Unable to fetch landmarks: ${error}`);
             }

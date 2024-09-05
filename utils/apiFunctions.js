@@ -48,6 +48,8 @@ export async function getNearbyLandmarks(latitude, longitude) {
             }
         });
 
+        //console.log(response);
+
         if (!response || !response.data) {
             throw new Error("Response or response data is undefined");
         }
@@ -56,7 +58,7 @@ export async function getNearbyLandmarks(latitude, longitude) {
             throw new Error("Place data is undefined or empty");
         }
 
-        console.log('Place Data:', placeData);
+        //console.log('Place Data:', placeData);
 
         for (const place of placeData) {
             //console.log(place);

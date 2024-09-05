@@ -1,17 +1,43 @@
 import { View, Text, StyleSheet } from 'react-native';
 import DetailsContainer from './DetailsContainer';
+import { FontAwesome } from '@expo/vector-icons';
+import WebButtton from './WebButton';
 
 export default function LocationDetailsCard({ title, address, businessStatus, currentOpeningHours, userRatingCount, websiteUri, rating }) {
     const openingHours = currentOpeningHours ? currentOpeningHours.weekdayDescriptions : ['Available every day'];
+
+    function renderStars(rating) {
+        const stars = [];
+        for (let i = 1; i <= 5; i++) {
+            stars.push(
+                <FontAwesome
+                    key={i}
+                    name={i <= rating ? "star" : "star-o"}
+                    size={25}
+                    color="black"
+                    style={styles.starIcon}
+                />
+            );
+        }
+        return stars;
+    }
+
     return (
         <View style={styles.cardContainer}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.cardTitle}>{title}</Text>
+            <View style={styles.headerContainer}>
+                <View style={styles.ratingContainer}>
+                    {renderStars(rating)}
+                    <Text style={styles.userRatingCount}>({userRatingCount.toLocaleString()})</Text>
+                </View>
+
                 <View style={styles.underline}></View>
             </View>
             <View style={styles.detailsContainer}>
                 <DetailsContainer icon='address'>
                     <Text style={styles.text}>{address}</Text>
+                </DetailsContainer>
+                <DetailsContainer>
+
                 </DetailsContainer>
                 {/* <Text>{businessStatus}</Text> */}
                 <DetailsContainer icon='calendar'>
@@ -22,9 +48,7 @@ export default function LocationDetailsCard({ title, address, businessStatus, cu
                     </View>
                 </DetailsContainer>
 
-                <Text>{userRatingCount}</Text>
-                <Text>{websiteUri}</Text>
-                <Text>{rating}</Text>
+                <WebButtton websiteUri={websiteUri}/>
             </View>
 
         </View>
@@ -37,15 +61,20 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 30
     },
-    titleContainer: {
+    headerContainer: {
         justifyContent: 'center',
         alignItems: 'center',
 
     },
-    cardTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        paddingVertical: 20
+    userRatingCount: {
+        fontSize: 16,
+        marginVertical: 6,
+        marginLeft: 5,
+        fontFamily: 'figtree-regular'
+    },
+    ratingContainer: {
+        flexDirection: 'row',
+        marginVertical: 20
     },
     text: {
         fontSize: 14,

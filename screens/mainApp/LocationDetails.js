@@ -40,8 +40,8 @@ export default function LocationDetails({ route }) {
                 businessStatus={businessStatus}
                 currentOpeningHours={currentOpeningHours}
                 userRatingCount={userRatingCount}
-                websiteUri={websiteUri}
                 rating={rating}
+                websiteUri={websiteUri}
             />
         </View>
     );

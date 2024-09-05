@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import DetailsContainer from './DetailsContainer';
 import { FontAwesome } from '@expo/vector-icons';
-import WebButtton from './WebButton';
+import NavigateButton from './NavigateButton';
+
 
 export default function LocationDetailsCard({ title, address, businessStatus, currentOpeningHours, userRatingCount, websiteUri, rating }) {
     const openingHours = currentOpeningHours ? currentOpeningHours.weekdayDescriptions : ['Available every day'];
@@ -21,9 +22,16 @@ export default function LocationDetailsCard({ title, address, businessStatus, cu
         }
         return stars;
     }
+    //extract only the street from full retrieved address
+    function formatAddress(address) {
+        const parts = address.split(',');
+        return parts[0];
+    }
+
+
 
     return (
-        <View style={styles.cardContainer}>
+        <ScrollView style={styles.cardContainer}>
             <View style={styles.headerContainer}>
                 <View style={styles.ratingContainer}>
                     {renderStars(rating)}
@@ -34,24 +42,26 @@ export default function LocationDetailsCard({ title, address, businessStatus, cu
             </View>
             <View style={styles.detailsContainer}>
                 <DetailsContainer icon='address'>
-                    <Text style={styles.text}>{address}</Text>
+                    <Text style={styles.text}>{formatAddress(address)}</Text>
                 </DetailsContainer>
-                <DetailsContainer>
-
-                </DetailsContainer>
-                {/* <Text>{businessStatus}</Text> */}
                 <DetailsContainer icon='calendar'>
                     <View style={{ flexDirection: 'column' }}>
                         {openingHours.map((entry, index) => (
-                            <Text key={index} style={[styles.text, { paddingVertical: 5 }]}>{entry}</Text>
+                            <Text key={index} style={[styles.text, { paddingBottom: 5 }]}>{entry}</Text>
                         ))}
                     </View>
                 </DetailsContainer>
 
-                <WebButtton websiteUri={websiteUri}/>
+
+                <NavigateButton websiteUri={websiteUri} title='Book tickets!'/>
+                <NavigateButton 
+                title='Show on Map'
+                customButtonStyles={styles.customNavigationButton}
+                customTextStyles={styles.customNavigationButtontext} 
+                />
             </View>
 
-        </View>
+        </ScrollView>
     );
 }
 
@@ -59,12 +69,16 @@ const styles = StyleSheet.create({
     cardContainer: {
         borderRadius: 10,
         backgroundColor: 'white',
-        borderRadius: 30
+        borderRadius: 30,
+        flex: 1,
     },
     headerContainer: {
         justifyContent: 'center',
         alignItems: 'center',
 
+    },
+    detailsContainer: {
+        paddingTop: 5
     },
     userRatingCount: {
         fontSize: 16,
@@ -77,15 +91,23 @@ const styles = StyleSheet.create({
         marginVertical: 20
     },
     text: {
-        fontSize: 14,
+        fontSize: 16,
         color: 'black',
         fontFamily: 'figtree-regular',
-        marginTop: 2,
+        marginTop: 5,
         marginLeft: 15
     },
     underline: {
         backgroundColor: '#E5E4E2',
         height: 3,
         width: '100%'
+    },
+    customNavigationButton: {
+        backgroundColor: 'white',
+        borderWidth: 2,
+        borderColor: 'black',
+    },
+    customNavigationButtontext: {
+        color: 'black',
     }
 });

@@ -4,7 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import NavigateButton from './NavigateButton';
 
 
-export default function LocationDetailsCard({ title, address, businessStatus, currentOpeningHours, userRatingCount, websiteUri, rating }) {
+export default function LocationDetailsCard({ title, address, businessStatus, currentOpeningHours, userRatingCount, websiteUri, rating, latitude, longitude }) {
     const openingHours = currentOpeningHours ? currentOpeningHours.weekdayDescriptions : ['Available every day'];
 
     function renderStars(rating) {
@@ -28,14 +28,12 @@ export default function LocationDetailsCard({ title, address, businessStatus, cu
         return parts[0];
     }
 
-
-
     return (
         <ScrollView style={styles.cardContainer}>
             <View style={styles.headerContainer}>
                 <View style={styles.ratingContainer}>
-                    {renderStars(rating)}
-                    <Text style={styles.userRatingCount}>({userRatingCount.toLocaleString()})</Text>
+                    {renderStars(Math.round(rating))}
+                   { userRatingCount && <Text style={styles.userRatingCount}>({userRatingCount.toLocaleString()})</Text>}
                 </View>
 
                 <View style={styles.underline}></View>
@@ -58,6 +56,9 @@ export default function LocationDetailsCard({ title, address, businessStatus, cu
                 title='Show on Map'
                 customButtonStyles={styles.customNavigationButton}
                 customTextStyles={styles.customNavigationButtontext} 
+                mapButton={true}
+                latitude={latitude}
+                longitude={longitude}
                 />
             </View>
 

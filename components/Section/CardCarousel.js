@@ -23,6 +23,8 @@ export default function CardCarousel({ customStyle, landmarks }) {
                     userRatingCount ={landmark.userRatingCount}
                     websiteUri={landmark.websiteUri}
                     rating={landmark.rating}
+                    latitude={landmark.latitude}
+                    longitude={landmark.longitude}
                 />
             ))}
         </ScrollView>

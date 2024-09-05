@@ -9,7 +9,7 @@ import { LocationContext } from '../../context/LocationContext';
 import { getCity, getNearbyLandmarks, getLocationPhoto } from '../../utils/apiFunctions';
 import { LandmarkContext } from '../../context/LandmarkContext';
 
-export default function Home({ navigation }) {
+export default function Home({ navigation, route }) {
     const [currentView, setCurrentView] = useState('Overview');
     const { location } = useContext(LocationContext);
     const {landmarks} = useContext(LandmarkContext); 
@@ -27,6 +27,12 @@ export default function Home({ navigation }) {
 
         fetchCity();
     }, [location]);
+
+    useEffect(() => {
+        if (route.params?.showOnMap) {
+            setCurrentView('Map');
+        }
+    }, [route.params]);
 
  
     useEffect(() => {

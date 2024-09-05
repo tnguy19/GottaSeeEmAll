@@ -12,7 +12,9 @@ export default function LocationDetails({ route }) {
         currentOpeningHours,
         userRatingCount,
         websiteUri,
-        rating
+        rating,
+        latitude,
+        longitude
     } = route.params;
     //console.log(rating);
     return (
@@ -42,6 +44,8 @@ export default function LocationDetails({ route }) {
                 userRatingCount={userRatingCount}
                 rating={rating}
                 websiteUri={websiteUri}
+                latitude={latitude}
+                longitude={longitude}
             />
         </View>
     );

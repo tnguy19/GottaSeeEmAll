@@ -16,10 +16,12 @@ export default function PlaceCard(props) {
         currentOpeningHours,
         userRatingCount,
         websiteUri,
-        rating
+        rating,
+        latitude,
+        longitude
     } = props; 
 
-    //console.log('Current opening hours', currentOpeningHours);
+    //console.log(`${latitude}, ${longitude}`);
 
     const [loading, setLoading] = useState(true);
     const navigation = useNavigation();

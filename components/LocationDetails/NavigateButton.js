@@ -1,10 +1,16 @@
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import * as Linking from 'expo-linking';
+import { useNavigation } from "@react-navigation/native";
 
-export default function NavigateButton({websiteUri, customButtonStyles, customTextStyles, title}) {
+export default function NavigateButton({websiteUri, customButtonStyles, customTextStyles, title, mapButton, latitude, longitude}) {
+    const navigation = useNavigation();
 
     function handlePress(){
-        Linking.openURL(websiteUri)
+        if (mapButton){
+            navigation.navigate('Home',{ latitude: latitude, longitude: longitude, title: title, showOnMap: true });
+        } else {
+            Linking.openURL(websiteUri)
+        }
     }
 
     return (

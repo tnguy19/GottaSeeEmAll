@@ -6,11 +6,18 @@ export default function PlaceList({ landmarks }) {
     function renderItem({ item }) {
         return (
             <PlaceCard
-                locationId={item.api_id}
-                title={item.name}
-                address={item.address}
-                imageUri={item.photo}
-            />
+            locationId={item.api_id}
+            title={item.name}
+            address={item.address}
+            imageUri={item.photo}
+            businessStatus={item.businessStatus}
+            currentOpeningHours={item.currentOpeningHours}
+            userRatingCount ={item.userRatingCount}
+            websiteUri={item.websiteUri}
+            rating={item.rating}
+            latitude={item.latitude}
+            longitude={item.longitude}
+        />
         )
     }
     

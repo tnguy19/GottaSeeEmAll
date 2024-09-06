@@ -79,7 +79,7 @@ export async function getNearbyLandmarks(latitude, longitude) {
             );
             //console.log(newLandmark.currentOpeningHours)
             landmarks.push(newLandmark);
-            console.log('Succesfully retrieved landmark:', landmarks);
+            //console.log('Succesfully retrieved landmark:', landmarks);
         }
         return landmarks;
     } catch (error) {

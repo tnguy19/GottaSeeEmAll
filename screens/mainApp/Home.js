@@ -16,7 +16,7 @@ export default function Home({ navigation, route }) {
     const [currentCity, setCurrentCity] = useState();
     const [dataLoaded, setDataLoaded] = useState(false);
 
-    console.log(landmarks)
+    //console.log(landmarks)
     useEffect(() => {
         async function fetchCity() {
             if (location && location.coords) {
@@ -44,7 +44,7 @@ export default function Home({ navigation, route }) {
 
     useEffect(() => {
         navigation.setOptions({
-            header: () => <HomeHeader onPress={toggleView} />,
+            header: () => <HomeHeader onPress={toggleView} currentView={currentView} />,
         });
     }, [currentView]);
 
@@ -59,10 +59,12 @@ export default function Home({ navigation, route }) {
     }
 
     if (currentView === 'Map') {
+        //console.log(`${route.params.latitude}, ${route.params.longitude}`);
         return (
-            <Map />
+            <Map customLatitude={route.params.latitude} customLongitude={route.params.longitude} locationName={route.params.locationName} />
         );
     }
+
     
     return (
         <ScrollView style={styles.container}>

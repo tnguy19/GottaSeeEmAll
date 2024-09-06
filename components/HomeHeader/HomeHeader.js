@@ -3,9 +3,7 @@ import HeaderButton from "./HeaderButton";
 import { SafeAreaView } from "react-native";
 import { useState } from "react";
 
-export default function HomeHeader({onPress}){
-
-    const [activeButton, setActiveButton] = useState('Overview');
+export default function HomeHeader({onPress, currentView}){
 
     return (
         <SafeAreaView>
@@ -13,18 +11,16 @@ export default function HomeHeader({onPress}){
             <HeaderButton 
                 title='Overview' 
                 icon='map-marker'
-                isActive={activeButton === 'Overview'}
+                isActive={currentView === 'Overview'}
                 onPress={() => { 
-                    setActiveButton('Overview');
                     onPress('Overview')
                 }}
             />
             <HeaderButton 
                 title='Map' 
                 icon='map' 
-                isActive={activeButton === 'Map'}
+                isActive={currentView === 'Map'}
                 onPress={() => {
-                    setActiveButton('Map');
                     onPress('Map')
                 }}
             />

@@ -6,15 +6,11 @@ import { Marker } from "react-native-maps";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { LocationContext } from "../../context/LocationContext";
 
-export default function Map() {
-
+export default function Map({customLatitude, customLongitude, locationName}) {
+    console.log('customLatitude', customLatitude);
+    console.log('customLongitude', customLongitude);
+    console.log('location Name', locationName);
     const {location} = useContext(LocationContext);
-
-    const placeholderCoords = [
-        { latitude: 37.7749, longitude: -122.4194 },
-        { latitude: 39, longitude: -125 },
-        { latitude: 47, longitude: -125 },
-    ];
 
     return (
         <View>
@@ -23,17 +19,17 @@ export default function Map() {
                     <MapView
                         style={styles.map}
                         initialRegion={{
-                            latitude: location.coords.latitude,
-                            longitude: location.coords.longitude,
-                            latitudeDelta: 0.07,
-                            longitudeDelta: 0.07,
+                            latitude: customLatitude ? customLatitude : location.coords.latitude,
+                            longitude: customLongitude ? customLongitude : location.coords.longitude,
+                            latitudeDelta: 0.03,
+                            longitudeDelta: 0.03,
                         }}
                     >
                         <Marker 
-                            coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude}}
-                            title={'Your current location'}
+                            coordinate={{latitude:  customLatitude ? customLatitude : location.coords.latitude, longitude : customLongitude ? customLongitude : location.coords.longitude}}
+                            title={locationName ? locationName : 'Your current location'}
                         />
-                        {
+                        {/* {
                             placeholderCoords && (
                                 placeholderCoords.map((marker, index) => (
                                     <TouchableOpacity key={index}>
@@ -46,7 +42,7 @@ export default function Map() {
 
                                 ))
                             )
-                        }
+                        } */}
 
                     </MapView>
                 )

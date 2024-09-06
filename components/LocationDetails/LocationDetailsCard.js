@@ -7,6 +7,8 @@ import NavigateButton from './NavigateButton';
 export default function LocationDetailsCard({ title, address, businessStatus, currentOpeningHours, userRatingCount, websiteUri, rating, latitude, longitude }) {
     const openingHours = currentOpeningHours ? currentOpeningHours.weekdayDescriptions : ['Available every day'];
 
+    console.log(`${latitude}, ${longitude}`);
+    
     function renderStars(rating) {
         const stars = [];
         for (let i = 1; i <= 5; i++) {
@@ -59,6 +61,7 @@ export default function LocationDetailsCard({ title, address, businessStatus, cu
                 mapButton={true}
                 latitude={latitude}
                 longitude={longitude}
+                locationName={title}
                 />
             </View>
 

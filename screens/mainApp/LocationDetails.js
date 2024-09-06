@@ -16,7 +16,9 @@ export default function LocationDetails({ route }) {
         latitude,
         longitude
     } = route.params;
-    //console.log(rating);
+
+    //console.log(`${latitude}, ${longitude}`);
+
     return (
         <View style={styles.screenContainer}>
             <ImageBackground

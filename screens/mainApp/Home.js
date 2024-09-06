@@ -60,9 +60,16 @@ export default function Home({ navigation, route }) {
 
     if (currentView === 'Map') {
         //console.log(`${route.params.latitude}, ${route.params.longitude}`);
-        return (
-            <Map customLatitude={route.params.latitude} customLongitude={route.params.longitude} locationName={route.params.locationName} />
-        );
+        if (route.params?.latitude && route.params?.longitude && route.params?.locationName){
+            return (
+                <Map customLatitude={route.params.latitude} customLongitude={route.params.longitude} locationName={route.params.locationName} />
+            );
+        } else {
+            return (
+                <Map/>
+            );
+        }
+        
     }
 
     

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, ImageBackground, StyleSheet, Text, Dimensions, TouchableOpacity, ActivityIndicator } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from '@react-navigation/native';
+import { FontAwesome } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
 const placeholderImageUri = require('../../assets/locationImages/test1.jpg');
@@ -19,19 +20,24 @@ export default function PlaceCard(props) {
         rating,
         latitude,
         longitude
-    } = props; 
+    } = props;
 
     //console.log(`${latitude}, ${longitude}`);
 
     const [loading, setLoading] = useState(true);
+    const [isFavorite, setIsFavorite] = useState(false);
     const navigation = useNavigation();
 
-    function loadingFinishHandler(){
+    function loadingFinishHandler() {
         setLoading(false);
     }
 
-    function handlePress(){
-        navigation.navigate('LocationDetails',{ ...props });
+    function toggleFavorite() {
+        setIsFavorite(currentState => !currentState);
+    }
+
+    function handlePress() {
+        navigation.navigate('LocationDetails', { ...props, isFavorite: isFavorite });
     }
     const imageSource = imageUri ? { uri: imageUri } : placeholderImageUri;
     //console.log(imageSource);
@@ -56,6 +62,13 @@ export default function PlaceCard(props) {
                         colors={['transparent', 'rgba(0,0,0,0.8)']}
                         style={styles.gradient}
                     >
+                        <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
+                            <FontAwesome
+                                name={isFavorite ? 'star' : 'star-o'}
+                                size={18}
+                                color="white"
+                            />
+                        </TouchableOpacity>
                         <View style={styles.textContainer}>
                             <Text style={styles.title}>{title}</Text>
                         </View>
@@ -82,6 +95,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end',
         paddingBottom: 10,
+    },
+    favoriteButton: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        zIndex: 1,
     },
     textContainer: {
         paddingHorizontal: 5,

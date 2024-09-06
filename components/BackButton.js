@@ -31,7 +31,4 @@ const styles = StyleSheet.create({
     touchable: {
         position: 'absolute',
     },
-    arrow: {
-        
-    },
 });

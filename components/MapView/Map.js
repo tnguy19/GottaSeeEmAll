@@ -7,9 +7,9 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { LocationContext } from "../../context/LocationContext";
 
 export default function Map({customLatitude, customLongitude, locationName}) {
-    console.log('customLatitude', customLatitude);
-    console.log('customLongitude', customLongitude);
-    console.log('location Name', locationName);
+    // console.log('customLatitude', customLatitude);
+    // console.log('customLongitude', customLongitude);
+    // console.log('location Name', locationName);
     const {location} = useContext(LocationContext);
 
     return (

@@ -48,21 +48,22 @@ export async function getNearbyLandmarks(latitude, longitude) {
             }
         });
 
-        //console.log(response);
+        console.log('API Response:', response.data.places);
 
-        if (!response || !response.data) {
-            throw new Error("Response or response data is undefined");
+        if (!response) {
+            console.log("Response or response data is undefined");
         }
         const placeData = response.data.places;
         if (!placeData || placeData.length === 0) {
-            throw new Error("Place data is undefined or empty");
+            console.log("Place data is undefined or empty");
         }
 
         //console.log('Place Data:', placeData);
 
         for (const place of placeData) {
             //console.log(place);
-            const placePhoto = await getPlacePhoto(place.photos[0].name);
+            const placePhoto = place.photos && place.photos.length > 0 ? await getPlacePhoto(place.photos[0].name) : null;
+
             //console.log(`Place photo: ${placePhoto}`);
             const newLandmark = new Landmark(
                 place.displayName.text,
@@ -95,7 +96,7 @@ async function getPlacePhoto(api_photo_name) {
 
     try {
         const response = await axios.get(photoURL);
-        console.log(`Photo response: ${response.photoUri}`);
+        //console.log(`Photo response: ${response.photoUri}`);
         return response.data.photoUri;
     } catch (error) {
         console.log(`Error fetching image with api photo resource name ${photoURL}: ${error}`);

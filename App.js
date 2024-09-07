@@ -17,6 +17,7 @@ import Search from './screens/mainApp/Search';
 import { LocationProvider } from './context/LocationContext';
 import LandmarkProvider from './context/LandmarkContext';
 import LocationDetails from './screens/mainApp/LocationDetails';
+import { WishlistProvider} from './context/WishlistContext';
 
 const getFonts = () =>
   Font.loadAsync({
@@ -81,37 +82,39 @@ export default function App() {
   return (
     <LocationProvider>
       <LandmarkProvider>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name='MainApp'
-              component={MainAppTab}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='SeeAll'
-              component={SeeAll}
-              options={{
-                headerShown: false
-              }}
-            />
-            <Stack.Screen
-              name='Search'
-              component={Search}
-              options={{
-                headerShown: false,
-                animation: 'slide_from_bottom'
-              }}
-            />
-            <Stack.Screen
-              name='LocationDetails'
-              component={LocationDetails}
-              options={{
-                headerShown: false
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <WishlistProvider>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen
+                name='MainApp'
+                component={MainAppTab}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name='SeeAll'
+                component={SeeAll}
+                options={{
+                  headerShown: false
+                }}
+              />
+              <Stack.Screen
+                name='Search'
+                component={Search}
+                options={{
+                  headerShown: false,
+                  animation: 'slide_from_bottom'
+                }}
+              />
+              <Stack.Screen
+                name='LocationDetails'
+                component={LocationDetails}
+                options={{
+                  headerShown: false
+                }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </WishlistProvider>
       </LandmarkProvider>
     </LocationProvider>
   );

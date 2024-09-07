@@ -48,7 +48,7 @@ export async function getNearbyLandmarks(latitude, longitude) {
             }
         });
 
-        console.log('API Response:', response.data.places);
+        //sconsole.log('API Response:', response.data.places);
 
         if (!response) {
             console.log("Response or response data is undefined");

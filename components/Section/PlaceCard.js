@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, ImageBackground, StyleSheet, Text, Dimensions, TouchableOpacity, ActivityIndicator } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { WishlistContext } from '../../context/WishlistContext';
 
 const windowWidth = Dimensions.get('window').width;
 const placeholderImageUri = require('../../assets/locationImages/test1.jpg');
@@ -19,28 +21,76 @@ export default function PlaceCard(props) {
         websiteUri,
         rating,
         latitude,
-        longitude
+        longitude,
+        isFavorite
     } = props;
 
-    //console.log(`${latitude}, ${longitude}`);
-
     const [loading, setLoading] = useState(true);
-    const [isFavorite, setIsFavorite] = useState(false);
     const navigation = useNavigation();
+    const [favoriteStatus, setFavoriteStatus] = useState(isFavorite);
+    const { wishlist, addToWishlist, removeFromWishlist } = useContext(WishlistContext);
 
-    function loadingFinishHandler() {
+    useEffect(() => {
+        loadFavoriteStatus();
+    }, []);
+
+    const loadFavoriteStatus = async () => {
+        try {
+            const savedFavorites = await AsyncStorage.getItem('favorites');
+            if (savedFavorites) {
+                const favoriteArray = JSON.parse(savedFavorites);
+                const isFav = favoriteArray.some(fav => fav.locationId === locationId);
+                setFavoriteStatus(isFav);
+            }
+        } catch (error) {
+            console.error('Error loading favorite status:', error);
+        }
+    };
+
+    const saveFavoriteStatus = async (newStatus) => {
+        try {
+            let updatedWishlist;
+            if (newStatus) {
+                const favoriteData = {
+                    'locationId': locationId,
+                    'name': title,
+                    'photo': imageUri,
+                    'address': address,
+                    'businessStatus': businessStatus,
+                    'currentOpeningHours': currentOpeningHours,
+                    'userRatingCount': userRatingCount,
+                    'websiteUri': websiteUri,
+                    'rating': rating,
+                    'latitude': latitude,
+                    'longitude': longitude
+                };
+                updatedWishlist = [...wishlist, favoriteData];
+                await addToWishlist(favoriteData);
+            } else {
+                updatedWishlist = wishlist.filter(fav => fav.locationId !== locationId);
+                await removeFromWishlist(locationId); 
+            }
+            await AsyncStorage.setItem('favorites', JSON.stringify(updatedWishlist));
+        } catch (error) {
+            console.error('Error saving favorite status:', error);
+        }
+    };
+
+    const loadingFinishHandler = () => {
         setLoading(false);
-    }
+    };
 
-    function toggleFavorite() {
-        setIsFavorite(currentState => !currentState);
-    }
+    const toggleFavorite = () => {
+        const newFavoriteStatus = !favoriteStatus;
+        setFavoriteStatus(newFavoriteStatus);
+        saveFavoriteStatus(newFavoriteStatus);
+    };
 
-    function handlePress() {
-        navigation.navigate('LocationDetails', { ...props, isFavorite: isFavorite });
-    }
+    const handlePress = () => {
+        navigation.navigate('LocationDetails', { ...props, isFavorite: favoriteStatus });
+    };
+
     const imageSource = imageUri ? { uri: imageUri } : placeholderImageUri;
-    //console.log(imageSource);
 
     return (
         <TouchableOpacity onPress={handlePress}>
@@ -64,7 +114,7 @@ export default function PlaceCard(props) {
                     >
                         <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
                             <FontAwesome
-                                name={isFavorite ? 'star' : 'star-o'}
+                                name={favoriteStatus ? 'star' : 'star-o'}
                                 size={18}
                                 color="white"
                             />
@@ -76,7 +126,7 @@ export default function PlaceCard(props) {
                 </ImageBackground>
             </View>
         </TouchableOpacity>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -109,7 +159,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 14,
         color: 'white',
-        fontFamily: 'figtree-bold'
+        fontFamily: 'figtree-bold',
     },
     loadingIndicator: {
         position: 'absolute',

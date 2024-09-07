@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
         right: 18,
         zIndex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between',  // Space between elements
-        alignItems: 'center',  // Align items vertically in the center
+        justifyContent: 'space-between',  
+        alignItems: 'center', 
     },
     favoriteButton: {
         right: 0,

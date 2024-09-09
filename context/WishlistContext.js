@@ -7,50 +7,44 @@ export const WishlistProvider = ({ children }) => {
     const [wishlist, setWishlist] = useState([]);
 
     useEffect(() => {
-        async function loadWishlist() {
-            try {
-                const savedFavorites = await AsyncStorage.getItem('favorites');
-                if (savedFavorites) {
-                    setWishlist(JSON.parse(savedFavorites));
-                }
-            } catch (error) {
-                console.error('Error loading wishlist:', error);
-            }
-        }
-
         loadWishlist();
     }, []);
 
-    async function addToWishlist (item) {
+    async function loadWishlist (){
         try {
-            setWishlist(prevWishlist => {
-                const updatedWishlist = [...prevWishlist];
-                const index = updatedWishlist.findIndex(fav => fav.locationId === item.locationId);
-                if (index === -1) {
-                    updatedWishlist.push(item);
-                }
-                return updatedWishlist;
-            });
-            await AsyncStorage.setItem('favorites', JSON.stringify(wishlist));
+            const storedWishlist = await AsyncStorage.getItem('wishlist');
+            if (storedWishlist) {
+                setWishlist(JSON.parse(storedWishlist));
+            }
         } catch (error) {
-            console.error('Error adding to wishlist:', error);
+            console.error('Failed to load wishlist:', error);
         }
     };
 
-    async function removeFromWishlist (locationId) {
+    async function saveWishlist (newWishlist) {
         try {
-            setWishlist(prevWishlist => {
-                const updatedWishlist = prevWishlist.filter(fav => fav.locationId !== locationId);
-                return updatedWishlist;
-            });
-            await AsyncStorage.setItem('favorites', JSON.stringify(wishlist));
+            await AsyncStorage.setItem('wishlist', JSON.stringify(newWishlist));
         } catch (error) {
-            console.error('Error removing from wishlist:', error);
+            console.error('Failed to save wishlist:', error);
         }
+    };
+
+    function addToWishlist(item) {
+        const newWishlist = [...wishlist, item];
+        setWishlist((prevWishlist) => [...prevWishlist, item]);
+        saveWishlist(newWishlist);
+    };
+
+    function removeFromWishlist(locationId) {
+        setWishlist((prevWishlist) => prevWishlist.filter(item => item.locationId !== locationId));
+    }
+    
+    function isFavorite (locationId){
+        return wishlist.some(item => item.locationId === locationId);
     };
 
     return (
-        <WishlistContext.Provider value={{ wishlist, addToWishlist, removeFromWishlist }}>
+        <WishlistContext.Provider value={{ wishlist, addToWishlist, removeFromWishlist, isFavorite }}>
             {children}
         </WishlistContext.Provider>
     );

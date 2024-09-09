@@ -14,7 +14,7 @@ export default function Home({ navigation, route }) {
     const [currentView, setCurrentView] = useState('Overview');
     const { location } = useContext(LocationContext);
     const { landmarks } = useContext(LandmarkContext);
-    const { wishlist, setWishlist } = useContext(WishlistContext); 
+    const { wishlist } = useContext(WishlistContext); 
     const [currentCity, setCurrentCity] = useState();
     const [dataLoaded, setDataLoaded] = useState(false);
 
@@ -57,6 +57,10 @@ export default function Home({ navigation, route }) {
         });
     }
 
+    function isFavorite(locationId) {
+        return wishlist.some(favoritePlace => favoritePlace.locationId === locationId);
+    }
+
     if (currentView === 'Map') {
         if (route.params?.latitude && route.params?.longitude && route.params?.locationName) {
             return (
@@ -67,10 +71,6 @@ export default function Home({ navigation, route }) {
                 <Map />
             );
         }
-    }
-
-    function isFavorite(locationId) {
-        return wishlist.some(favoritePlace => favoritePlace.locationId === locationId);
     }
 
     return (

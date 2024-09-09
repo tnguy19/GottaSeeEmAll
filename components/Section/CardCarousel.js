@@ -13,7 +13,7 @@ export default function CardCarousel({ customStyle, landmarks, isFavorite}) {
         >
             {landmarks.map((landmark, index) => (
                 <PlaceCard
-                    key={landmark.locationId}
+                    key={index}
                     locationId={landmark.api_id}
                     title={landmark.name}
                     address={landmark.address}

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, ImageBackground, StyleSheet, Text, Dimensions, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from '@react-navigation/native';
@@ -27,6 +27,7 @@ export default function PlaceCard(props) {
     const navigation = useNavigation();
     const { addToWishlist, removeFromWishlist } = useContext(WishlistContext);
 
+
     function toggleFavorite() {
         if (isFavorite) {
             removeFromWishlist(locationId);  
@@ -42,7 +43,8 @@ export default function PlaceCard(props) {
                 websiteUri,
                 rating,
                 latitude,
-                longitude
+                longitude,
+                isFavorite: !isFavorite  // Toggle the isFavorite state
             };
             addToWishlist(favoriteData);  
         }

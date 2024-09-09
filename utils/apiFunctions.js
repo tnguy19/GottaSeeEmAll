@@ -76,7 +76,7 @@ export async function getNearbyLandmarks(latitude, longitude) {
                 place.regularOpeningHours,
                 place.rating,
                 place.userRatingCount,
-                place.websiteUri
+                place.websiteUri,
             );
             //console.log(newLandmark.currentOpeningHours)
             landmarks.push(newLandmark);

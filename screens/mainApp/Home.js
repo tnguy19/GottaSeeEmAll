@@ -14,10 +14,11 @@ export default function Home({ navigation, route }) {
     const [currentView, setCurrentView] = useState('Overview');
     const { location } = useContext(LocationContext);
     const { landmarks } = useContext(LandmarkContext);
-    const { wishlist } = useContext(WishlistContext); 
+    const { wishlist, isFavorite } = useContext(WishlistContext); 
     const [currentCity, setCurrentCity] = useState();
     const [dataLoaded, setDataLoaded] = useState(false);
-
+    console.log('Landmark 0:',landmarks[0]);
+    console.log('Wishlist 0', wishlist[0]);
     useEffect(() => {
         async function fetchCity() {
             if (location && location.coords) {
@@ -57,10 +58,6 @@ export default function Home({ navigation, route }) {
         });
     }
 
-    function isFavorite(locationId) {
-        return wishlist.some(favoritePlace => favoritePlace.locationId === locationId);
-    }
-
     if (currentView === 'Map') {
         if (route.params?.latitude && route.params?.longitude && route.params?.locationName) {
             return (
@@ -84,7 +81,7 @@ export default function Home({ navigation, route }) {
                     {dataLoaded && <CardCarousel landmarks={landmarks} isFavorite={isFavorite} />}
                 </OverviewSection>
                 <OverviewSection title='Wishlist' landmarks={wishlist}>
-                    {dataLoaded && <CardCarousel landmarks={wishlist} isFavorite={isFavorite} />}
+                    {dataLoaded && <CardCarousel landmarks={wishlist} isFavorite={isFavorite} wishList={true}/>}
                 </OverviewSection>
             </View>
         </ScrollView>

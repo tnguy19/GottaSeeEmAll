@@ -30,7 +30,7 @@ export const WishlistProvider = ({ children }) => {
     };
 
     function addToWishlist(item) {
-        const newWishlist = [...wishlist, item];
+        const newWishlist = [...wishlist, { ...item, isFavorite: true}];
         setWishlist((prevWishlist) => [...prevWishlist, item]);
         saveWishlist(newWishlist);
     };

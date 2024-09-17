@@ -1,11 +1,11 @@
-import { GOOGLE_API_KEY, GOOGLE_MAPS_API_KEY } from "./api_keys";
+import { GOOGLE_MAPS_API_KEY } from "./api_keys";
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Landmark } from "./landmark";
 
 //Function to get city name from input coords using Google API
 export async function getCity(latitude, longitude) {
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_API_KEY}`;
     try {
         const response = await axios.get(url);
         const data = response.data;
